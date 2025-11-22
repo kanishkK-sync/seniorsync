@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Pill, Clock, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { mockMedications } from '../../data/mockData';
+import type { Medication } from '../../data/mockData';
 import { cn } from '../../lib/utils';
 
 const timeLabels = {
@@ -10,12 +10,20 @@ const timeLabels = {
   night: { label: 'Night', icon: '🌙', color: 'bg-blue-100 text-blue-700' },
 };
 
-export function MedicationTimeline() {
+interface MedicationTimelineProps {
+  medications?: Medication[];
+  onMarkTaken?: (medicationId: string) => void;
+}
+
+export function MedicationTimeline({ 
+  medications = [], 
+  onMarkTaken 
+}: MedicationTimelineProps) {
   const navigate = useNavigate();
   const groupedMeds = {
-    morning: mockMedications.filter(m => m.time === 'morning'),
-    noon: mockMedications.filter(m => m.time === 'noon'),
-    night: mockMedications.filter(m => m.time === 'night'),
+    morning: medications.filter(m => m.time === 'morning'),
+    noon: medications.filter(m => m.time === 'noon'),
+    night: medications.filter(m => m.time === 'night'),
   };
 
   return (
@@ -81,8 +89,14 @@ export function MedicationTimeline() {
                           ? 'bg-red-50 border-red-300 shadow-lg shadow-red-200/50 animate-pulse'
                           : med.taken
                           ? 'bg-green-50 border-green-300'
-                          : 'bg-white border-slate-200'
+                          : 'bg-white border-slate-200 cursor-pointer hover:border-medical-blue'
                       )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!med.taken && !med.missed && onMarkTaken) {
+                          onMarkTaken(med.id);
+                        }
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">

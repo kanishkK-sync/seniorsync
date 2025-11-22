@@ -1,18 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Droplet, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export function HydrationTracker() {
-  const navigate = useNavigate();
-  const [filled, setFilled] = useState(5); // Start with 5 filled
+interface HydrationTrackerProps {
+  currentAmount?: number;
+  goal?: number;
+  onLogHydration?: (amount: number) => void;
+}
 
-  const toggleGlass = (index: number, e: React.MouseEvent) => {
+export function HydrationTracker({ 
+  currentAmount = 0, 
+  goal = 8,
+  onLogHydration 
+}: HydrationTrackerProps) {
+  const navigate = useNavigate();
+  const [filled, setFilled] = useState(currentAmount);
+
+  useEffect(() => {
+    setFilled(currentAmount);
+  }, [currentAmount]);
+
+  const toggleGlass = async (index: number, e: React.MouseEvent) => {
     e.stopPropagation();
     if (index < filled) {
-      setFilled(index);
+      // Decreasing - remove one glass
+      const newAmount = index;
+      setFilled(newAmount);
+      // Note: In a real app, you might want to handle decreasing differently
     } else {
-      setFilled(index + 1);
+      // Increasing - add one glass
+      const newAmount = index + 1;
+      setFilled(newAmount);
+      onLogHydration?.(1);
     }
   };
 
@@ -70,7 +90,7 @@ export function HydrationTracker() {
       </div>
 
       <div className="mt-6 text-center">
-        <p className="text-3xl font-bold text-slate-900">{filled}/8</p>
+        <p className="text-3xl font-bold text-slate-900">{filled}/{goal}</p>
         <p className="text-sm text-slate-600 mt-1">Glasses Today</p>
       </div>
     </motion.div>

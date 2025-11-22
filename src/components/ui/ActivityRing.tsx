@@ -3,12 +3,25 @@ import 'react-circular-progressbar/dist/styles.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { mockActivityData } from '../../data/mockData';
 
-export function ActivityRing() {
+interface ActivityRingProps {
+  steps?: number;
+  goal?: number;
+  calories?: number;
+  distance?: number;
+  onSendNudge?: () => void;
+}
+
+export function ActivityRing({ 
+  steps = 0, 
+  goal = 5000, 
+  calories = 0, 
+  distance = 0,
+  onSendNudge 
+}: ActivityRingProps) {
   const navigate = useNavigate();
-  const percentage = Math.round((mockActivityData.steps / mockActivityData.goal) * 100);
-  const showNudge = mockActivityData.steps < 5000;
+  const percentage = Math.round((steps / goal) * 100);
+  const showNudge = steps < goal;
 
   return (
     <motion.div
@@ -45,18 +58,18 @@ export function ActivityRing() {
         
         <div className="text-center mb-4">
           <p className="text-4xl font-bold text-slate-900 mb-1">
-            {mockActivityData.steps.toLocaleString()}
+            {steps.toLocaleString()}
           </p>
-          <p className="text-sm text-slate-600">of {mockActivityData.goal.toLocaleString()} steps</p>
+          <p className="text-sm text-slate-600">of {goal.toLocaleString()} steps</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 w-full mt-4">
           <div className="text-center p-3 bg-slate-50 rounded-xl">
-            <p className="text-2xl font-bold text-slate-900">{mockActivityData.calories}</p>
+            <p className="text-2xl font-bold text-slate-900">{calories}</p>
             <p className="text-xs text-slate-600">Calories</p>
           </div>
           <div className="text-center p-3 bg-slate-50 rounded-xl">
-            <p className="text-2xl font-bold text-slate-900">{mockActivityData.distance}</p>
+            <p className="text-2xl font-bold text-slate-900">{distance.toFixed(1)}</p>
             <p className="text-xs text-slate-600">Miles</p>
           </div>
         </div>
@@ -71,7 +84,7 @@ export function ActivityRing() {
               whileTap={{ scale: 0.95 }}
               onClick={(e) => {
                 e.stopPropagation();
-                console.log('Send Nudge');
+                onSendNudge?.();
               }}
               className="mt-6 w-full bg-medical-blue text-white px-4 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow"
             >
