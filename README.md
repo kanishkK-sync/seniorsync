@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# SeniorSync
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI-Powered Senior Care Assistance
 
-Currently, two official plugins are available:
+## About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+SeniorSync is a luxurious, high-tech health monitoring dashboard for seniors. Built with React, TypeScript, and modern UI/UX design principles.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Activity Tracking**: Monitor daily steps, calories, and distance with interactive circular progress indicators
+- **Hydration Tracker**: Track water intake with interactive glass icons
+- **Medication Management**: Visual timeline showing medication schedule with missed medication alerts
+- **Heart Rate Monitoring**: Beautiful charts displaying heart rate data over 24 hours
+- **Voice Assistant**: Floating action button with waveform animation
+- **Drill-Down Navigation**: Click any widget to view detailed information pages
+- **Rich User Profile**: Enhanced header with profile dropdown and notification system
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Framework**: React + Vite (TypeScript)
+- **Styling**: Tailwind CSS v3
+- **Icons**: Lucide-React
+- **Animations**: Framer Motion
+- **Charts**: Recharts
+- **Routing**: React Router DOM
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Design System
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Color Palette**: Medical Blue (#0ea5e9), with alert colors for warnings
+- **Aesthetics**: Glassmorphism with backdrop blur effects
+- **Typography**: Inter font family
+- **Components**: Rounded corners (rounded-3xl), deep shadows, smooth transitions
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+### Installation
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── layout/
+│   │   ├── AppShell.tsx      # Main layout with sidebar
+│   │   └── TopHeader.tsx      # Enhanced header with profile dropdown
+│   └── ui/                     # Widget components
+├── pages/
+│   ├── DoctorDashboard.tsx    # Main dashboard
+│   └── details/                # Detail pages for drill-down navigation
+├── data/
+│   └── mockData.ts            # Mock data for the dashboard
+└── lib/
+    └── utils.ts               # Utility functions
+```
+
+## License
+
+MIT
